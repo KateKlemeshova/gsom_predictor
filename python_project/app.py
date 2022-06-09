@@ -17,14 +17,15 @@ def predict():
     open_plan = args.get('open_plan', default=-1, type = int )
     rooms = args.get('rooms', default=-1, type=int)
     area = args.get('area', default=-1, type=float)
-    renovation = args.get('renovation', default=-1, type=int)
+    renovation = args.get('renovation', default=-1, type=float)
+    floor = args.get('renovation', default=-1, type=int)
 
-    #response ='open_plan:{}, rooms:{}, area:{}, renovation:{}'.format(open_plan, rooms, area, renovation)
+    #response ='open_plan:{}, rooms:{}, area:{}, renovation:{}'.format(open_plan, rooms, area, renovation, floor)
     model_1 =joblib.load(MODEL_FOREST_PATH)
     sc_x = joblib.load(SCALER_X_path)
     sc_y = joblib.load(SCALER_Y_path)
 
-    X = numpy.array([open_plan, rooms, area, renovation]).reshape(1,-1)
+    X = numpy.array([open_plan, rooms, area, renovation, floor], floor).reshape(1,-1)
     X = sc_x.transform(X)
     result = model_1.predict(X)
     result = sc_y.inverse_transform(result.reshape(1,-1))
